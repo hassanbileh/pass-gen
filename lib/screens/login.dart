@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:passgen/constants/assets/assets_constants.dart';
+import 'package:passgen/data/data.dart';
+import 'package:passgen/screens/screens.dart';
 import 'package:passgen/widgets/widgets.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -20,30 +22,63 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   @override
+  void dispose() {
+    _email.dispose();
+    _password.dispose();
+    super.dispose();
+  }
+
+  void _signIn(String email, String password) {
+    bool emailExists = false;
+    bool passwordExists = false;
+    for (var i = 0; i < emails.length; i++) {
+      if (emails[i] == email) {
+        emailExists = true;
+      }
+    }
+    for (var i = 0; i < passwords.length; i++) {
+      if (passwords[i] == password) {
+        passwordExists = true;
+      }
+    }
+
+    if (emailExists && passwordExists) {
+      print('logged succesfully');
+      Navigator.of(context)
+          .pushNamedAndRemoveUntil(Assets.homeRoute, (route) => false);
+    } else {
+      print('wrong credentials');
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     final height = MediaQuery.sizeOf(context).height;
     final width = MediaQuery.sizeOf(context).width;
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              RegisterHeader(height: height, width: width),
-              const Text(
-                'Login to your master account',
-                style: TextStyle(
-                  fontSize: 16.0,
-                  fontWeight: FontWeight.w200,
+        child: CustomScrollView(
+          slivers: [
+            SliverToBoxAdapter(
+              child: RegisterHeader(height: height, width: width),
+            ),
+            const SliverToBoxAdapter(
+              child: Center(
+                child: Text(
+                  'Login to your master account',
+                  style: TextStyle(
+                    fontSize: 18.0,
+                    fontWeight: FontWeight.w300,
+                    fontStyle: FontStyle.italic,
+                  ),
                 ),
               ),
+            ),
 
-              const SizedBox(
-                height: 5.0,
-              ),
-
-              //Email textField
-              CustomTextField(
+            //Email textField
+            SliverToBoxAdapter(
+              child: CustomTextField(
                 padding: EdgeInsets.only(
                   left: MediaQuery.sizeOf(context).width * 0.1,
                   right: MediaQuery.sizeOf(context).width * 0.1,
@@ -55,9 +90,11 @@ class _LoginScreenState extends State<LoginScreen> {
                 labelText: 'Email',
                 isPassword: false,
               ),
+            ),
 
-              //Password textField
-              CustomTextField(
+            //Password textField
+            SliverToBoxAdapter(
+              child: CustomTextField(
                 padding: EdgeInsets.only(
                   left: MediaQuery.sizeOf(context).width * 0.1,
                   right: MediaQuery.sizeOf(context).width * 0.1,
@@ -68,14 +105,37 @@ class _LoginScreenState extends State<LoginScreen> {
                 labelText: 'Password',
                 isPassword: true,
               ),
+            ),
 
-              CustomButton(content: 'Login', onTap: () {}),
-
-              const SizedBox(
-                height: 10.0,
+            SliverToBoxAdapter(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(right: 10.0),
+                    child: TextButton(
+                      onPressed: () {},
+                      child: Text('mot de passe oublié ?',
+                          style: TextStyle(
+                              fontSize: 14,
+                              color: Theme.of(context).colorScheme.primary)),
+                    ),
+                  ),
+                ],
               ),
+            ),
 
-              Row(
+            SliverToBoxAdapter(
+              child: Center(
+                child: CustomButton(
+                    content: 'Login',
+                    onTap: () =>
+                        _signIn(_email.text.trim(), _password.text.trim())),
+              ),
+            ),
+
+            SliverToBoxAdapter(
+              child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const Text('You don\'t have an account ?'),
@@ -90,16 +150,16 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ],
               ),
+            ),
 
-              const SizedBox(height: 10.0,),
-
-              RegisterFooter(
+            SliverToBoxAdapter(
+              child: RegisterFooter(
                 onTapGoogle: () {},
                 onTapFacebook: () {},
                 onTapTwitter: () {},
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

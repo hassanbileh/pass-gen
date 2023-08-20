@@ -24,6 +24,7 @@ class MyApp extends StatelessWidget {
         Assets.registerRoute:(context) => const RegisterScreen(),
         Assets.resetPassordRoute:(context) => const ResetPassword(),
         Assets.loginRoute:(context) => const LoginScreen(),
+        Assets.homeRoute:(context) => const NavScreen(),
       },
       home: const OnBoardingScreen(),
     );

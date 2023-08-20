@@ -12,7 +12,8 @@ class Assets{
   static const String welcomeButton2 = 'Continue';
   static const String registerRoute = '/register';
   static const String resetPassordRoute = '/reset-password';
-  static const String loginRoute = 'loginRoute';
+  static const String loginRoute = '/loginRoute';
+  static const String homeRoute= '/homeRoute';
   static const String google = '$_images/search.png';
   static const String facebook = '$_images/facebook.png';
   static const String twitter = '$_images/twitter.png';

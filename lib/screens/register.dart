@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:passgen/widgets/widgets.dart';
+import 'package:passgen/screens/screens.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -18,35 +18,30 @@ class _RegisterScreenState extends State<RegisterScreen> {
     final width = MediaQuery.sizeOf(context).width;
     return Scaffold(
       backgroundColor: Colors.white,
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            // header
-            RegisterHeader(height: height, width: width),
+      body: CustomScrollView(
+        slivers: [
+          // header
+          SliverToBoxAdapter(
+              child: RegisterHeader(height: height, width: width)),
 
-            const SizedBox(
-              height: 20.0,
-            ),
-
-            //body
-            RegisterBody(
+          //body
+          SliverToBoxAdapter(
+            child: RegisterBody(
               email: _email,
               password: _password,
               confirmPassword: _confirmPassword,
             ),
+          ),
 
-            const SizedBox(
-              height: 10.0,
-            ),
-
-            //footer content
-            RegisterFooter(
+          //footer content
+          SliverToBoxAdapter(
+            child: RegisterFooter(
               onTapGoogle: () {},
               onTapFacebook: () {},
               onTapTwitter: () {},
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

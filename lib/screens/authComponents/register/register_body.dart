@@ -18,8 +18,9 @@ class RegisterBody extends StatelessWidget {
         const Text(
           'Register a master account',
           style: TextStyle(
-            fontSize: 16.0,
-            fontWeight: FontWeight.w200,
+            fontSize: 18.0,
+            fontWeight: FontWeight.w300,
+            fontStyle: FontStyle.italic,
           ),
         ),
 

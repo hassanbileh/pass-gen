@@ -4,7 +4,7 @@ class CustomTextField extends StatelessWidget {
   final EdgeInsetsGeometry padding;
   final TextEditingController controller;
   final String hintText;
-  final String labelText;
+  final String? labelText;
   final bool isPassword;
   const CustomTextField({
     super.key,
