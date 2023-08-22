@@ -10,7 +10,16 @@ class NewPassword extends StatefulWidget {
 }
 
 class _NewPasswordState extends State<NewPassword> {
-  late final TextEditingController _title = TextEditingController();
+  late final TextEditingController _title, _password, _username, _notes;
+
+  @override
+  void initState() {
+    _title = TextEditingController();
+    _username = TextEditingController();
+    _password = TextEditingController();
+    _notes = TextEditingController();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,7 +36,12 @@ class _NewPasswordState extends State<NewPassword> {
           SliverPadding(
             padding: const EdgeInsets.symmetric(vertical: 10.0),
             sliver: SliverToBoxAdapter(
-              child: NewPasswordContent(title: _title),
+              child: NewPasswordContent(
+                title: _title,
+                username: _username,
+                password: _password,
+                notes: _notes,
+              ),
             ),
           ),
         ],

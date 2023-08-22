@@ -22,7 +22,7 @@ final List<String> usernames = [
   user1.username,
 ];
 
-const List<Password> generatedPasswords = [
+const List<Password> perUser = [
   Password(
     id: '01',
     title: 'Google',
@@ -30,6 +30,7 @@ const List<Password> generatedPasswords = [
     password: 'Hasbilbile',
     hint: 'who r u',
     imageUrl: Assets.google,
+    date: 'added yesterday',
   ),
 
   Password(
@@ -39,6 +40,7 @@ const List<Password> generatedPasswords = [
     password: 'MopremeShakur',
     hint: 'who r u',
     imageUrl: Assets.facebook,
+    date: 'added last week',
   ),
 
   Password(
@@ -48,6 +50,7 @@ const List<Password> generatedPasswords = [
     password: 'EzmahJunior',
     hint: 'who r u',
     imageUrl: Assets.twitter,
+    date: 'added last month',
   ),
 
   Password(
@@ -57,11 +60,12 @@ const List<Password> generatedPasswords = [
     password: 'CharkoAbdoukarim',
     hint: 'who r u',
     imageUrl: Assets.logo,
+    date: 'added last year',
   ),
 ];
 
 
-const List<Password> perUser = [
+const List<Password> generatedPasswords = [
   Password(
     id: '01',
     title: 'Google',
@@ -69,6 +73,7 @@ const List<Password> perUser = [
     password: 'Hasbilbile',
     hint: 'who r u',
     imageUrl: Assets.google,
+    date: 'generated yesterday',
   ),
 
   Password(
@@ -78,6 +83,7 @@ const List<Password> perUser = [
     password: 'Hasbilbile1',
     hint: 'who r u',
     imageUrl: Assets.facebook,
+    date: 'generated last week',
   ),
 
   Password(
@@ -87,6 +93,7 @@ const List<Password> perUser = [
     password: 'Hasbilbile3',
     hint: 'who r u',
     imageUrl: Assets.twitter,
+    date: 'generated last month',
   ),
 
   Password(
@@ -96,5 +103,6 @@ const List<Password> perUser = [
     password: 'Hasbilbile4',
     hint: 'who r u',
     imageUrl: Assets.logo,
+    date: 'generated last year',
   ),
 ];

@@ -28,7 +28,7 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
   }
 
-  void _signIn(String email, String password) {
+  Future<void> _signIn(String email, String password) async {
     bool emailExists = false;
     bool passwordExists = false;
     for (var i = 0; i < emails.length; i++) {
@@ -48,6 +48,27 @@ class _LoginScreenState extends State<LoginScreen> {
           .pushNamedAndRemoveUntil(Assets.homeRoute, (route) => false);
     } else {
       print('wrong credentials');
+      await showAdaptiveDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog.adaptive(
+              surfaceTintColor: Colors.white,
+              title: Text('Error'),
+              content: Text('wrong credentials'),
+              actions: [
+                TextButton(
+                    onPressed: () => Navigator.of(context).pop(),
+                    style: ButtonStyle(overlayColor: MaterialStateColor.resolveWith((states) => Colors.transparent)),
+                    child: const Text(
+                      'OK',
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400),
+                    )),
+              ],
+            );
+          });
     }
   }
 
@@ -100,9 +121,10 @@ class _LoginScreenState extends State<LoginScreen> {
                   bottom: 10.0,
                 ),
                 controller: _password,
-                 hintText: 'Your password here',
+                hintText: 'Your password here',
                 labelText: 'Password',
                 isPassword: true,
+                onSubmitted: (p0) => _signIn(_email.text, _password.text),
               ),
             ),
 
@@ -128,7 +150,7 @@ class _LoginScreenState extends State<LoginScreen> {
               child: Center(
                 child: CustomButton(
                     content: 'Login',
-                    onTap: () =>
+                    onTap: () async =>
                         _signIn(_email.text.trim(), _password.text.trim())),
               ),
             ),

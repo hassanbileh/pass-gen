@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:passgen/widgets/widgets.dart';
 
 class NewPasswordContent extends StatelessWidget {
-  final TextEditingController title;
+  final TextEditingController title, username, password, notes;
   const NewPasswordContent({
     super.key,
     required this.title,
-    // required this.username,
-    // required this.password,
+    required this.username,
+    required this.password,
+    required this.notes,
   });
 
   @override
@@ -26,7 +27,7 @@ class NewPasswordContent extends StatelessWidget {
         ),
         PasswordTextField(
           title: 'Username',
-          controller: title,
+          controller: username,
           isTitle: false,
         ),
         const SizedBox(
@@ -34,7 +35,7 @@ class NewPasswordContent extends StatelessWidget {
         ),
         PasswordTextField(
           title: 'Password',
-          controller: title,
+          controller: password,
           isTitle: false,
         ),
         const SizedBox(
@@ -54,7 +55,7 @@ class NewPasswordContent extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 10.0),
               child: TextField(
                 maxLines: 4,
-                controller: TextEditingController(),
+                controller: notes,
                 enableSuggestions: false,
                 autocorrect: false,
                 keyboardType: TextInputType.emailAddress,
@@ -68,7 +69,9 @@ class NewPasswordContent extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(height: 10.0,),
+            const SizedBox(
+              height: 10.0,
+            ),
             Center(
               child: CustomButton(
                 content: 'Save',

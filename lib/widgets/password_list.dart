@@ -51,13 +51,28 @@ class PasswordList extends StatelessWidget {
                             color: Colors.black,
                           ),
                         ),
-                        Text(
-                          password.username,
-                          style: const TextStyle(
-                            fontSize: 15.0,
-                            fontWeight: FontWeight.w300,
-                            color: Colors.black,
-                          ),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              password.username,
+                              style: const TextStyle(
+                                fontSize: 15.0,
+                                fontWeight: FontWeight.w400,
+                                color: Colors.black,
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                              child: Text(
+                                password.date,
+                                style: const TextStyle(
+                                  fontSize: 15.0,
+                                  fontWeight: FontWeight.w300,
+                                  color: Colors.black,
+                                ),),
+                            ),
+                          ],
                         ),
                       ],
                     ),

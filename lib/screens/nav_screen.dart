@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:passgen/constants/assets/assets_constants.dart';
 import 'package:passgen/screens/screens.dart';
 
 class NavScreen extends StatefulWidget {
@@ -13,12 +12,12 @@ class _NavScreenState extends State<NavScreen> {
 
   final List<Widget> _screens = [
     const HomeScreen(),
-    Scaffold(),
+    const GeneratorScreen(),
     Scaffold(),
   ];
   final Map<String, IconData> _icons = {
     'Home': Icons.home_filled,
-    'Generator': Icons.lock,
+    'Generator': Icons.build_circle,
     'Profil': Icons.account_circle,
   };
 
@@ -27,15 +26,6 @@ class _NavScreenState extends State<NavScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: _screens[_currentIndex],
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Theme.of(context).colorScheme.primary,
-        onPressed: () => Navigator.of(context).pushNamed(Assets.newPasswordRoute),
-        shape: const CircleBorder(side: BorderSide.none),
-        child: const Icon(
-          Icons.add,
-          color: Colors.white,
-        ),
-      ),
       bottomNavigationBar: BottomNavigationBar(
               type: BottomNavigationBarType.fixed,
               backgroundColor: Colors.white,
@@ -56,7 +46,7 @@ class _NavScreenState extends State<NavScreen> {
                   .toList(),
               currentIndex: _currentIndex,
               selectedFontSize: 11.0,
-              selectedItemColor: Colors.red[400],
+              selectedItemColor: Colors.red.shade600,
               unselectedItemColor: Colors.grey,
               onTap: (index) => setState(() {
                 _currentIndex = index;

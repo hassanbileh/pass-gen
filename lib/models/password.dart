@@ -1,5 +1,5 @@
 class Password {
-  final String id, title, username, password, hint, imageUrl;
+  final String id, title, username, password, hint, imageUrl, date;
 
   const Password({
     required this.id,
@@ -8,5 +8,6 @@ class Password {
     required this.password,
     required this.hint,
     required this.imageUrl,
+    required this.date,
   });
 }
