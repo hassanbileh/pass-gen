@@ -56,7 +56,6 @@ class _LoginScreenState extends State<LoginScreen> {
     final height = MediaQuery.sizeOf(context).height;
     final width = MediaQuery.sizeOf(context).width;
     return Scaffold(
-      backgroundColor: Colors.white,
       body: SafeArea(
         child: CustomScrollView(
           slivers: [
@@ -101,7 +100,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   bottom: 10.0,
                 ),
                 controller: _password,
-                hintText: 'Your password here',
+                 hintText: 'Your password here',
                 labelText: 'Password',
                 isPassword: true,
               ),

@@ -3,18 +3,23 @@ import 'package:passgen/models/password.dart';
 import 'package:passgen/models/user.dart';
 
 const User anonymous =
-    User(id: 'anonymous', email: 'email@anonymous.com', password: 'anonymous');
+    User(id: 'anonymous', email: 'email@anonymous.com', password: 'anonymous', username: 'Anonymous');
 const User user1 =
-    User(id: 'u001', email: 'email@exemple.com', password: 'password');
+    User(id: 'u001', email: 'email@exemple.com', password: 'password', username: 'Hasbil');
 
-const List<String> passwords = [
-  'anonymous',
-  'password',
+final List<String> passwords = [
+  anonymous.password,
+  user1.password,
 ];
 
-const List<String> emails = [
-  'email@anonymous.com',
-  'email@exemple.com',
+final List<String> emails = [
+  anonymous.email,
+  user1.email,
+];
+
+final List<String> usernames = [
+  anonymous.username,
+  user1.username,
 ];
 
 const List<Password> generatedPasswords = [

@@ -27,7 +27,6 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
@@ -49,18 +48,48 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ],
               ),
-              CustomTextField(
-                padding: EdgeInsets.fromLTRB(15.0, 20.0, 15.0, 15.0),
-                controller: _search,
-                hintText: 'Search for passwords',
-                labelText: null,
-                isPassword: false,
+              const SizedBox(height: 10.0,),
+              Container(
+                height: MediaQuery.sizeOf(context).height * 0.07,
+                width: MediaQuery.sizeOf(context).width * 0.85,
+                decoration: BoxDecoration(
+                  shape: BoxShape.rectangle,
+                  borderRadius: BorderRadius.circular(5.0),
+                  color: Colors.grey.shade100,
+                ),
+                child: Row(
+                  children: [
+                    const Padding(
+                      padding:  EdgeInsets.all(8.0),
+                      child:  Icon(Icons.search, size: 30, color: Colors.grey,),
+                    ),
+                    Expanded(
+                      child: TextField(
+                        controller: _search,
+                        enableSuggestions: false,
+                        autocorrect: false,
+                        keyboardType: TextInputType.emailAddress,
+                        decoration: InputDecoration(
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.grey.shade100),
+                          ),
+                          fillColor: Colors.grey.shade100,
+                          filled: true,
+                          hintText: 'search for passwords',
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
-
-              const SizedBox(height: 20.0,),
-
-              PasswordList(passwords: perUser, onTap: (){},),
-
+              
+              const SizedBox(
+                height: 15.0,
+              ),
+              PasswordList(
+                passwords: perUser,
+                onTap: () {},
+              ),
             ],
           ),
         ),

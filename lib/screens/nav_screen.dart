@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:passgen/constants/assets/assets_constants.dart';
 import 'package:passgen/screens/screens.dart';
 
 class NavScreen extends StatefulWidget {
@@ -25,11 +26,10 @@ class _NavScreenState extends State<NavScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       body: _screens[_currentIndex],
       floatingActionButton: FloatingActionButton(
         backgroundColor: Theme.of(context).colorScheme.primary,
-        onPressed: () {},
+        onPressed: () => Navigator.of(context).pushNamed(Assets.newPasswordRoute),
         shape: const CircleBorder(side: BorderSide.none),
         child: const Icon(
           Icons.add,

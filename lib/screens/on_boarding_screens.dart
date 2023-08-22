@@ -3,7 +3,6 @@ import 'package:passgen/constants/assets/assets_constants.dart';
 import 'package:passgen/widgets/widgets.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-import 'screens.dart';
 
 class OnBoardingScreen extends StatefulWidget {
   const OnBoardingScreen({super.key});
@@ -22,7 +21,6 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
     final height = MediaQuery.sizeOf(context).height;
     final width = MediaQuery.sizeOf(context).width;
     return Scaffold(
-      backgroundColor: Colors.white,
       body: Column(
         children: [
           SizedBox(
@@ -37,14 +35,14 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                   },
                   controller: _controller,
                   children: [
-                    OnBoardingPage(
+                    _OnBoardingPage(
                       image: Assets.logo,
                       height: height * 0.25,
                       width: width * 0.95,
                       title: Assets.welcomeTitle,
                       text: Assets.welcomeText,
                     ),
-                    OnBoardingPage(
+                    _OnBoardingPage(
                       image: Assets.dataProtection,
                       height: height * 0.3,
                       width: width * 0.70,
@@ -80,6 +78,86 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                       curve: Curves.easeIn,
                     );
                   }),
+        ],
+      ),
+    );
+  }
+}
+
+
+class _OnBoardingPage extends StatelessWidget {
+  final String image;
+  final String title;
+  final String text;
+  final double height;
+  final double width;
+  const _OnBoardingPage({
+    super.key,
+    required this.image,
+    required this.title,
+    required this.text,
+    required this.height,
+    required this.width,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: Column(
+        children: [
+          //logo
+          Container(
+            height: height,
+            width: width,
+            margin:  EdgeInsets.only(top: height * 0.1, bottom: 5.0),
+            decoration: BoxDecoration(
+              shape: BoxShape.rectangle,
+              image: DecorationImage(
+                image: AssetImage(image),
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+    
+          const SizedBox(
+            height: 20.0,
+          ),
+    
+          //welcome message
+          Center(
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    title,
+                    style: const TextStyle(
+                      fontSize: 28,
+                      color: Colors.black,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10.0),
+                  child: SizedBox(
+                    height: 150.0,
+                    width: 300.0,
+                    child: Text(
+                      text,
+                      style: const TextStyle(
+                        fontSize: 16,
+                        color: Colors.black,
+                        fontWeight: FontWeight.w200,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+    
+          //next button
         ],
       ),
     );
