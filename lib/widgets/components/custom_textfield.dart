@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 
+typedef HidePassword = bool Function()?;
+
 class CustomTextField extends StatelessWidget {
+  final Widget? iconButton;
   final EdgeInsetsGeometry padding;
   final TextEditingController controller;
   final String hintText;
   final String? labelText;
-  final bool isPassword;
+  final bool? isPassword;
+  final bool? isObscure;
   final Function(String)? onSubmitted;
   const CustomTextField({
     super.key,
@@ -13,13 +17,15 @@ class CustomTextField extends StatelessWidget {
     required this.controller,
     required this.hintText,
     required this.labelText,
-    required this.isPassword,
+    this.isPassword,
     this.onSubmitted,
+    this.isObscure, this.iconButton,
   });
 
   @override
   Widget build(BuildContext context) {
-    return !isPassword
+   
+    return (isPassword != null && isPassword != true && iconButton == null)
         ? //Email textField
         Padding(
             padding: padding,
@@ -41,14 +47,10 @@ class CustomTextField extends StatelessWidget {
           )
         : //Password textField
         Padding(
-            padding: EdgeInsets.only(
-              left: MediaQuery.sizeOf(context).width * 0.1,
-              right: MediaQuery.sizeOf(context).width * 0.1,
-              bottom: 10.0,
-            ),
+            padding: padding,
             child: TextField(
               controller: controller,
-              obscureText: true,
+              obscureText: (isObscure ?? true),
               enableSuggestions: false,
               autocorrect: false,
               decoration: InputDecoration(
@@ -59,6 +61,7 @@ class CustomTextField extends StatelessWidget {
                 filled: true,
                 hintText: hintText,
                 labelText: labelText,
+                suffixIcon: iconButton,
               ),
               onSubmitted: onSubmitted,
             ),

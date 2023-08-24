@@ -3,12 +3,16 @@ import 'package:passgen/constants/assets/assets_constants.dart';
 import 'package:passgen/widgets/widgets.dart';
 
 class RegisterBody extends StatelessWidget {
+  final Widget? iconButton;
+  final bool? isObscure;
   final TextEditingController email, password, confirmPassword;
   const RegisterBody({
     super.key,
     required this.email,
     required this.password,
     required this.confirmPassword,
+    this.iconButton,
+    this.isObscure,
   });
 
   @override
@@ -53,6 +57,8 @@ class RegisterBody extends StatelessWidget {
           hintText: 'Your password here',
           labelText: 'Password',
           isPassword: true,
+          isObscure: isObscure,
+          iconButton: iconButton,
         ),
 
         //Confirm Password textField
@@ -66,6 +72,8 @@ class RegisterBody extends StatelessWidget {
           hintText: 'Confirm your password',
           labelText: 'Confirm Password',
           isPassword: true,
+          isObscure: isObscure,
+          iconButton: iconButton,
         ),
 
         CustomButton(content: 'Sign Up', onTap: () {}),

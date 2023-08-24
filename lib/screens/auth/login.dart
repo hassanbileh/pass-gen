@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:passgen/constants/assets/assets_constants.dart';
-import 'package:passgen/data/data.dart';
 import 'package:passgen/screens/screens.dart';
 import 'package:passgen/widgets/widgets.dart';
 
@@ -13,6 +12,7 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   late final TextEditingController _email, _password;
+  bool isHidden = false;
 
   @override
   void initState() {
@@ -28,49 +28,49 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
   }
 
-  Future<void> _signIn(String email, String password) async {
-    bool emailExists = false;
-    bool passwordExists = false;
-    for (var i = 0; i < emails.length; i++) {
-      if (emails[i] == email) {
-        emailExists = true;
-      }
-    }
-    for (var i = 0; i < passwords.length; i++) {
-      if (passwords[i] == password) {
-        passwordExists = true;
-      }
-    }
+  // Future<void> _signIn(String email, String password) async {
+  //   bool emailExists = false;
+  //   bool passwordExists = false;
+  //   for (var i = 0; i < emails.length; i++) {
+  //     if (emails[i] == email) {
+  //       emailExists = true;
+  //     }
+  //   }
+  //   for (var i = 0; i < passwords.length; i++) {
+  //     if (passwords[i] == password) {
+  //       passwordExists = true;
+  //     }
+  //   }
 
-    if (emailExists && passwordExists) {
-      print('logged succesfully');
-      Navigator.of(context)
-          .pushNamedAndRemoveUntil(Assets.homeRoute, (route) => false);
-    } else {
-      print('wrong credentials');
-      await showAdaptiveDialog(
-          context: context,
-          builder: (context) {
-            return AlertDialog.adaptive(
-              surfaceTintColor: Colors.white,
-              title: Text('Error'),
-              content: Text('wrong credentials'),
-              actions: [
-                TextButton(
-                    onPressed: () => Navigator.of(context).pop(),
-                    style: ButtonStyle(overlayColor: MaterialStateColor.resolveWith((states) => Colors.transparent)),
-                    child: const Text(
-                      'OK',
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400),
-                    )),
-              ],
-            );
-          });
-    }
-  }
+  //   if (emailExists && passwordExists) {
+  //     print('logged succesfully');
+  //     Navigator.of(context)
+  //         .pushNamedAndRemoveUntil(Assets.homeRoute, (route) => false);
+  //   } else {
+  //     print('wrong credentials');
+  //     await showAdaptiveDialog(
+  //         context: context,
+  //         builder: (context) {
+  //           return AlertDialog.adaptive(
+  //             surfaceTintColor: Colors.white,
+  //             title: Text('Error'),
+  //             content: Text('wrong credentials'),
+  //             actions: [
+  //               TextButton(
+  //                   onPressed: () => Navigator.of(context).pop(),
+  //                   style: ButtonStyle(overlayColor: MaterialStateColor.resolveWith((states) => Colors.transparent)),
+  //                   child: const Text(
+  //                     'OK',
+  //                     style: TextStyle(
+  //                         color: Colors.black,
+  //                         fontSize: 14,
+  //                         fontWeight: FontWeight.w400),
+  //                   )),
+  //             ],
+  //           );
+  //         });
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -124,7 +124,24 @@ class _LoginScreenState extends State<LoginScreen> {
                 hintText: 'Your password here',
                 labelText: 'Password',
                 isPassword: true,
-                onSubmitted: (p0) => _signIn(_email.text, _password.text),
+                iconButton: IconButton(
+                  onPressed: () {
+                    setState(() {
+                    if (isHidden) {
+                      isHidden = false;
+                    }else{
+                      isHidden = true;
+                    }
+                  });
+                
+                  },
+                  icon: (!isHidden)
+                    ? const Icon(Icons.remove_red_eye)
+                    : const Icon(Icons.visibility_off),
+                ),
+                onSubmitted: (p0) => Navigator.of(context)
+                    .pushNamedAndRemoveUntil(
+                        Assets.homeRoute, (route) => false),
               ),
             ),
 
@@ -150,11 +167,14 @@ class _LoginScreenState extends State<LoginScreen> {
               child: Center(
                 child: CustomButton(
                     content: 'Login',
-                    onTap: () async =>
-                        _signIn(_email.text.trim(), _password.text.trim())),
+                    onTap: () => Navigator.of(context).pushNamedAndRemoveUntil(
+                        Assets.homeRoute, (route) => false)),
               ),
             ),
-
+            const SliverToBoxAdapter(
+                child: SizedBox(
+              height: 10.0,
+            )),
             SliverToBoxAdapter(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -173,6 +193,10 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
 
+            SliverToBoxAdapter(
+                child: const SizedBox(
+              height: 10.0,
+            )),
             SliverToBoxAdapter(
               child: RegisterFooter(
                 onTapGoogle: () {},

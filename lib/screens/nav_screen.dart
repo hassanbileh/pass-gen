@@ -9,7 +9,6 @@ class NavScreen extends StatefulWidget {
 }
 
 class _NavScreenState extends State<NavScreen> {
-
   final List<Widget> _screens = [
     const HomeScreen(),
     const GeneratorScreen(),
@@ -27,31 +26,31 @@ class _NavScreenState extends State<NavScreen> {
     return Scaffold(
       body: _screens[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
-              type: BottomNavigationBarType.fixed,
-              backgroundColor: Colors.white,
-              items: _icons
-                  .map(
-                    (title, icon) => MapEntry(
-                      title,
-                      BottomNavigationBarItem(
-                        icon: Icon(
-                          icon,
-                          size: 30.0,
-                        ),
-                        label: title,
-                      ),
-                    ),
-                  )
-                  .values
-                  .toList(),
-              currentIndex: _currentIndex,
-              selectedFontSize: 11.0,
-              selectedItemColor: Colors.red.shade600,
-              unselectedItemColor: Colors.grey,
-              onTap: (index) => setState(() {
-                _currentIndex = index;
-              }),
-            ),
+        type: BottomNavigationBarType.fixed,
+        backgroundColor: Colors.white,
+        items: _icons
+            .map(
+              (title, icon) => MapEntry(
+                title,
+                BottomNavigationBarItem(
+                  icon: Icon(
+                    icon,
+                    size: 30.0,
+                  ),
+                  label: title,
+                ),
+              ),
+            )
+            .values
+            .toList(),
+        currentIndex: _currentIndex,
+        selectedFontSize: 11.0,
+        selectedItemColor: Colors.red.shade600,
+        unselectedItemColor: Colors.grey,
+        onTap: (index) => setState(() {
+          _currentIndex = index;
+        }),
+      ),
     );
   }
 }

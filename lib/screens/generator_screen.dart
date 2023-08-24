@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:passgen/screens/screens.dart';
 import 'package:passgen/widgets/widgets.dart';
+import 'dart:math';
+import 'package:flutter/services.dart';
 
 class GeneratorScreen extends StatefulWidget {
   const GeneratorScreen({super.key});
@@ -9,6 +12,7 @@ class GeneratorScreen extends StatefulWidget {
 }
 
 class _GeneratorScreenState extends State<GeneratorScreen> {
+  String? _generatedPwd;
   double _length = 10.0;
   bool hasUpperCase = false;
   bool hasLowerCase = false;
@@ -17,7 +21,7 @@ class _GeneratorScreenState extends State<GeneratorScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
+        body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -32,11 +36,13 @@ class _GeneratorScreenState extends State<GeneratorScreen> {
               const SizedBox(
                 height: 15.0,
               ),
-              const _GenerateHeader(),
+              GeneratePasswordHeader(
+                generatedPwd: _generatedPwd,
+              ),
               const SizedBox(
                 height: 20.0,
               ),
-              _CustomOptions(
+              CustomOptions(
                 length: _length,
                 isSlider: true,
                 title: 'length: ',
@@ -69,36 +75,123 @@ class _GeneratorScreenState extends State<GeneratorScreen> {
               const SizedBox(
                 height: 10.0,
               ),
-              _CustomOptions(
+              CustomOptions(
                 title: 'OPTIONS',
-                child: PasswordOptions(has: hasUpperCase, onChanged: (value){
-                  setState(() {
-                    hasUpperCase = value;
-                  });
-                }, leading: 'A - Z', trailing: 'Uppercase ( A to Z )'),
+                child: PasswordOptions(
+                    has: hasUpperCase,
+                    onChanged: (value) {
+                      setState(() {
+                        hasUpperCase = value;
+                      });
+                    },
+                    leading: 'A - Z',
+                    trailing: 'Uppercase ( A to Z )'),
               ),
-              _CustomOptions(
-                child: PasswordOptions(has: hasLowerCase, onChanged: (value){
-                  setState(() {
-                    hasLowerCase = value;
-                  });
-                }, leading: 'a - z', trailing: 'Lowercase ( a to z )'),
+              CustomOptions(
+                child: PasswordOptions(
+                    has: hasLowerCase,
+                    onChanged: (value) {
+                      setState(() {
+                        hasLowerCase = value;
+                      });
+                    },
+                    leading: 'a - z',
+                    trailing: 'Lowercase ( a to z )'),
               ),
-              _CustomOptions(
-                child: PasswordOptions(has: hasNumbers, onChanged: (value){
-                  setState(() {
-                    hasNumbers = value;
-                  });
-                }, leading: '0 - 9', trailing: 'Numbers ( 0 to 9 )'),
+              CustomOptions(
+                child: PasswordOptions(
+                    has: hasNumbers,
+                    onChanged: (value) {
+                      setState(() {
+                        hasNumbers = value;
+                      });
+                    },
+                    leading: '0 - 9',
+                    trailing: 'Numbers ( 0 to 9 )'),
               ),
-              _CustomOptions(
-                child: PasswordOptions(has: hasSymbols, onChanged: (value){
-                  setState(() {
-                    hasSymbols = value;
-                  });
-                }, leading: '!@\$^&', trailing: 'Characters ( !@\$^& )'),
+              CustomOptions(
+                child: PasswordOptions(
+                    has: hasSymbols,
+                    onChanged: (value) {
+                      setState(() {
+                        hasSymbols = value;
+                      });
+                    },
+                    leading: '!@\$^&',
+                    trailing: 'Characters ( !@\$^& )'),
               ),
-              Center(child: CustomButton(content: 'GENERATE', onTap: (){}))
+              const SizedBox(
+                height: 15.0,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        _length = 10.0;
+                        hasUpperCase = false;
+                        hasLowerCase = false;
+                        hasNumbers = false;
+                        hasSymbols = false;
+                        _generatedPwd = null;
+                      });
+                    },
+                    child: Container(
+                      margin: const EdgeInsets.only(top: 10.0),
+                      height: 50.0,
+                      width: 50.0,
+                      decoration: const BoxDecoration(
+                        color: Colors.redAccent,
+                        shape: BoxShape.circle,
+                      ),
+                      child: const Icon(
+                        Icons.restart_alt,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                  CustomButton(
+                    content: 'GENERATE',
+                    onTap: () {
+                      final pwd = generateRandomString(_length.toInt());
+                      setState(() {
+                        _generatedPwd = pwd;
+                      });
+                      print(pwd);
+                      return _generatedPwd;
+                    },
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        Clipboard.setData(ClipboardData(text: _generatedPwd!))
+                            .then((_) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                  content: Text('Copied to your clipboard !')));
+                        });
+                      });
+                    },
+                    child: Container(
+                      margin: const EdgeInsets.only(top: 10.0),
+                      height: 50.0,
+                      width: 50.0,
+                      decoration: const BoxDecoration(
+                        color: Colors.redAccent,
+                        shape: BoxShape.circle,
+                      ),
+                      child: const Icon(
+                        Icons.copy,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 25.0,
+              ),
             ],
           ),
         ),
@@ -107,127 +200,9 @@ class _GeneratorScreenState extends State<GeneratorScreen> {
   }
 }
 
-class _GenerateHeader extends StatelessWidget {
-  const _GenerateHeader({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Container(
-        height: MediaQuery.sizeOf(context).height * 0.15,
-        width: MediaQuery.sizeOf(context).width * 0.9,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              'GENERATED PASSWORD',
-              style: TextStyle(
-                  fontSize: 12.0,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.grey),
-            ),
-            const SizedBox(
-              height: 5.0,
-            ),
-            Expanded(
-              child: Container(
-                height: MediaQuery.sizeOf(context).height * 0.1,
-                width: MediaQuery.sizeOf(context).width * 0.9,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8.0),
-                    color: Colors.grey.shade300),
-                child: const Center(
-                    child: Text(
-                  'cjnKOPnji21-cjnKOPnji21',
-                  style: TextStyle(
-                    fontSize: 18.0,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.black87,
-                  ),
-                )),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _CustomOptions extends StatelessWidget {
-  final Widget child;
-  final String? title;
-  final bool? isSlider;
-  final double? length;
-  const _CustomOptions({
-    super.key,
-    required this.child,
-    this.length,
-    this.isSlider,
-    this.title,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Container(
-        height: MediaQuery.sizeOf(context).height * 0.1,
-        width: MediaQuery.sizeOf(context).width * 0.9,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            (isSlider != null)
-                ?
-                //Title
-                Row(
-                    children: [
-                      (title != null)
-                          ? Text(
-                              title!.toUpperCase(),
-                              style: const TextStyle(
-                                  fontSize: 12.0,
-                                  fontWeight: FontWeight.w600,
-                                  color: Colors.grey),
-                            )
-                          : const SizedBox(),
-                      Text(
-                        length!.toStringAsFixed(0).toString(),
-                        style: const TextStyle(
-                            fontSize: 12.0,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.grey),
-                      ),
-                    ],
-                  )
-                : (title != null)
-                    ? Text(
-                        title!.toUpperCase(),
-                        style: const TextStyle(
-                            fontSize: 12.0,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.grey),
-                      )
-                    : const SizedBox(),
-
-            const SizedBox(
-              height: 5.0,
-            ),
-
-            //Content
-            Expanded(
-              child: Container(
-                height: MediaQuery.sizeOf(context).height * 0.1,
-                width: MediaQuery.sizeOf(context).width * 0.9,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8.0),
-                  color: Colors.grey.shade300,
-                ),
-                child: child,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
+String generateRandomString(int len) {
+  var r = Random();
+  const chars =
+      'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890!@\$^&';
+  return List.generate(len, (index) => chars[r.nextInt(chars.length)]).join();
 }

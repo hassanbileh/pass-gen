@@ -23,10 +23,14 @@ class PasswordOptions extends StatelessWidget {
         children: [
           Text(
             leading,
+            style: const TextStyle(fontWeight: FontWeight.w600),
           ),
           Row(
             children: [
-              Text(trailing),
+              Text(
+                trailing,
+                style: const TextStyle(fontWeight: FontWeight.w600),
+              ),
               Switch.adaptive(
                 value: has,
                 onChanged: onChanged,

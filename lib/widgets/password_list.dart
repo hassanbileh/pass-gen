@@ -13,14 +13,11 @@ class PasswordList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: MediaQuery.sizeOf(context).width * 0.9,
-      height: MediaQuery.sizeOf(context).height,
-      child: ListView.builder(
-        itemCount: passwords.length,
-        itemBuilder: (context, index) {
-          final password = passwords[index];
-          return GestureDetector(
+    return SliverList.builder(
+      itemCount: passwords.length,
+      itemBuilder: (context, index) {
+        final password = passwords[index];
+        return GestureDetector(
             onTap: onTap,
             child: Column(
               children: [
@@ -63,14 +60,16 @@ class PasswordList extends StatelessWidget {
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 8.0),
                               child: Text(
                                 password.date,
                                 style: const TextStyle(
                                   fontSize: 15.0,
                                   fontWeight: FontWeight.w300,
                                   color: Colors.black,
-                                ),),
+                                ),
+                              ),
                             ),
                           ],
                         ),
@@ -92,8 +91,9 @@ class PasswordList extends StatelessWidget {
               ],
             ),
           );
-        },
-      ),
+        
+        
+      },
     );
   }
 }

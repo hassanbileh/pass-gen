@@ -3,12 +3,17 @@ import 'package:passgen/widgets/widgets.dart';
 
 class NewPasswordContent extends StatelessWidget {
   final TextEditingController title, username, password, notes;
+
+  final bool? isObscure;
+  final Widget? iconButton;
   const NewPasswordContent({
     super.key,
     required this.title,
     required this.username,
     required this.password,
     required this.notes,
+    this.isObscure,
+    this.iconButton,
   });
 
   @override
@@ -17,7 +22,7 @@ class NewPasswordContent extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        PasswordTextField(
+        GenerateTextField(
           title: 'Title',
           controller: title,
           isTitle: true,
@@ -25,7 +30,7 @@ class NewPasswordContent extends StatelessWidget {
         const SizedBox(
           height: 8.0,
         ),
-        PasswordTextField(
+        GenerateTextField(
           title: 'Username',
           controller: username,
           isTitle: false,
@@ -33,10 +38,12 @@ class NewPasswordContent extends StatelessWidget {
         const SizedBox(
           height: 8.0,
         ),
-        PasswordTextField(
+        GenerateTextField(
           title: 'Password',
           controller: password,
           isTitle: false,
+          isObscure: isObscure,
+          iconButton: iconButton,
         ),
         const SizedBox(
           height: 8.0,
