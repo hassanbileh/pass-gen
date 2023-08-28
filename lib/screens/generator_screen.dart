@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:passgen/bloc/generate_bloc.dart';
 import 'package:passgen/screens/screens.dart';
 import 'package:passgen/widgets/widgets.dart';
 import 'dart:math';
@@ -14,14 +16,14 @@ class GeneratorScreen extends StatefulWidget {
 class _GeneratorScreenState extends State<GeneratorScreen> {
   String? _generatedPwd;
   double _length = 10.0;
-  bool hasUpperCase = false;
-  bool hasLowerCase = false;
+  bool hasUpperCase = true;
+  bool hasLowerCase = true;
   bool hasNumbers = false;
   bool hasSymbols = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: SafeArea(
+      body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -102,9 +104,10 @@ class _GeneratorScreenState extends State<GeneratorScreen> {
                 child: PasswordOptions(
                     has: hasNumbers,
                     onChanged: (value) {
-                      setState(() {
-                        hasNumbers = value;
-                      });
+                      // setState(() {
+                      //   hasNumbers = value;
+                      // });
+                      context.read<GenerateBloc>().add(SetNumbers(hasNumbers));
                     },
                     leading: '0 - 9',
                     trailing: 'Numbers ( 0 to 9 )'),
@@ -163,16 +166,32 @@ class _GeneratorScreenState extends State<GeneratorScreen> {
                     },
                   ),
                   GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        Clipboard.setData(ClipboardData(text: _generatedPwd!))
-                            .then((_) {
-                          ScaffoldMessenger.of(context).showSnackBar(
+                    onTap: (_generatedPwd != null)
+                        ? () {
+                            setState(() {
+                              Clipboard.setData(ClipboardData(
+                                text: _generatedPwd ?? '\n',
+                              )).then(
+                                (_) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      content:
+                                          Text('Copied to your clipboard !'),
+                                    ),
+                                  );
+                                },
+                              );
+                            });
+                          }
+                        : () {
+                            ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
-                                  content: Text('Copied to your clipboard !')));
-                        });
-                      });
-                    },
+                                content: Text('There\'s nothing to copy !'),
+                                duration: Duration(seconds: 3),
+                                showCloseIcon: true,
+                              ),
+                            );
+                          },
                     child: Container(
                       margin: const EdgeInsets.only(top: 10.0),
                       height: 50.0,

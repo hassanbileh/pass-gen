@@ -31,9 +31,11 @@ class PasswordOptions extends StatelessWidget {
                 trailing,
                 style: const TextStyle(fontWeight: FontWeight.w600),
               ),
-              Switch.adaptive(
-                value: has,
-                onChanged: onChanged,
+              SizedBox(
+                child: Switch.adaptive(
+                  value: has,
+                  onChanged: onChanged,
+                ),
               ),
             ],
           )

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:passgen/constants/assets/assets_constants.dart';
 import 'package:flutter/services.dart';
+import 'package:passgen/data/data.dart';
+import 'package:passgen/widgets/widgets.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -11,10 +13,15 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   late final TextEditingController _search;
+  late ScrollController _scrollController;
+  double offset = 0;
 
   @override
   void initState() {
-    
+    _scrollController = ScrollController()
+      ..addListener(() {
+        offset = _scrollController.offset;
+      });
     _search = TextEditingController();
     super.initState();
   }
@@ -41,22 +48,34 @@ class _HomeScreenState extends State<HomeScreen> {
       //   ),
       // ),
       body: CustomScrollView(
+        controller: _scrollController,
         slivers: [
           SliverAppBar(
             stretch: true,
-            pinned: true,
-            leading: IconButton(onPressed: () {}, icon: const Icon(Icons.menu, color: Colors.white,)),
-            expandedHeight: 200,
-            backgroundColor: Colors.red,
+            expandedHeight: 150,
+            backgroundColor: Colors.white,
             flexibleSpace: FlexibleSpaceBar(
+              background: PreferredSize(
+                  preferredSize: Size(MediaQuery.sizeOf(context).width * 0.95,
+                      MediaQuery.sizeOf(context).height * 0.15),
+                  child: _CustomAppBar(
+                    search: _search,
+                  )),
             ),
           ),
-          SliverList.builder(
-            itemBuilder: (context, index) => ListTile(
-              title: Text('item $index'),
+          SliverPadding(
+            padding:
+                const EdgeInsets.symmetric(vertical: 20.0, horizontal: 10.0),
+            sliver: SliverLayoutBuilder(
+              builder: (context, constraints) {
+                return PasswordList(
+                  passwords: perUser,
+                  onTap: () {},
+                );
+              },
             ),
-            itemCount: 100,
           ),
+          
         ],
       ),
       floatingActionButton: FloatingActionButton(
@@ -74,15 +93,13 @@ class _HomeScreenState extends State<HomeScreen> {
 }
 
 class _CustomAppBar extends StatelessWidget {
-  final double offset;
   final TextEditingController search;
-  const _CustomAppBar({super.key, required this.search, required this.offset});
+  const _CustomAppBar({super.key, required this.search});
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Container(
-        color: Colors.white.withOpacity((offset / 150).clamp(0, 1).toDouble()),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -105,6 +122,7 @@ class _CustomAppBar extends StatelessWidget {
                     child: const Text(
                       'Add password',
                       style: TextStyle(
+                        color: Colors.red,
                         fontSize: 16,
                         fontWeight: FontWeight.w500,
                       ),

@@ -15,7 +15,7 @@ class Assets{
   static const String loginRoute = '/loginRoute';
   static const String homeRoute= '/homeRoute';
   static const String newPasswordRoute = '/newPasswordRoute';
-  static const String google = '$_images/search.png';
+  static const String google = '$_images/google.png';
   static const String facebook = '$_images/facebook.png';
   static const String twitter = '$_images/twitter.png';
 }

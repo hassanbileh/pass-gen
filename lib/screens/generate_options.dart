@@ -61,14 +61,17 @@ class CustomOptions extends StatelessWidget {
 
             //Content
             Expanded(
-              child: Container(
-                height: MediaQuery.sizeOf(context).height * 0.1,
-                width: MediaQuery.sizeOf(context).width * 0.9,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8.0),
-                  color: Colors.grey.shade300,
+              child: Card(
+                elevation: 4.0,
+                child: Container(
+                  height: MediaQuery.sizeOf(context).height * 0.1,
+                  width: MediaQuery.sizeOf(context).width * 0.9,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8.0),
+                    color: Colors.white,
+                  ),
+                  child: child,
                 ),
-                child: child,
               ),
             ),
           ],

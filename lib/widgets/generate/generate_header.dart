@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:passgen/bloc/generate_bloc.dart';
 
 typedef VerifyRobustess = Widget Function(String?);
 
@@ -63,7 +65,7 @@ class GeneratePasswordHeader extends StatelessWidget {
                       : const Text(''),
                 ),
               ],
-            ),
+            )
           ],
         ),
       ),
