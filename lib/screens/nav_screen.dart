@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:passgen/bloc/generate_bloc.dart';
+import 'package:passgen/cubits/cubit/switch_cubit.dart';
 import 'package:passgen/screens/screens.dart';
 
 class NavScreen extends StatefulWidget {
@@ -26,8 +26,8 @@ class _NavScreenState extends State<NavScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocProvider(
-        create: (context) => GenerateBloc(),
+      body: BlocProvider<SwitchCubit>(
+        create: (_) => SwitchCubit(),
         child: _screens[_currentIndex],
       ),
       bottomNavigationBar: BottomNavigationBar(

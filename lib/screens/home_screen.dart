@@ -35,18 +35,6 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: PreferredSize(
-      //   preferredSize: Size(MediaQuery.sizeOf(context).width * 0.95,
-      //       MediaQuery.sizeOf(context).height * 0.15),
-      //   child: BlocBuilder<AppBarCubit, double>(
-      //     builder: (context, scrollOffset) {
-      //       return _CustomAppBar(
-      //         offset: scrollOffset,
-      //         search: _search,
-      //       );
-      //     },
-      //   ),
-      // ),
       body: CustomScrollView(
         controller: _scrollController,
         slivers: [

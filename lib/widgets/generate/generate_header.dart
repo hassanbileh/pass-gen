@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:passgen/bloc/generate_bloc.dart';
 
 typedef VerifyRobustess = Widget Function(String?);
 
@@ -73,6 +71,8 @@ class GeneratePasswordHeader extends StatelessWidget {
   }
 }
 
+//STRENGTH VERIFICATION
+
 Widget _verifyStrength(BuildContext context, String pwd) {
   if (pwd.length > 20) {
     return Container(
@@ -110,7 +110,7 @@ Widget _verifyStrength(BuildContext context, String pwd) {
         ),
       ),
     );
-  } else {
+  } else if(pwd.length > 1 && pwd.length < 10) {
     return Container(
       height: 35.0,
       width: MediaQuery.sizeOf(context).width,
@@ -122,5 +122,7 @@ Widget _verifyStrength(BuildContext context, String pwd) {
         ),
       ),
     );
+  }else{
+    return Container();
   }
 }

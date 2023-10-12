@@ -4,11 +4,11 @@ typedef SwitchCallBack = void Function(bool)?;
 
 class PasswordOptions extends StatelessWidget {
   final String leading, trailing;
-  final bool has;
+  final bool? has;
   final SwitchCallBack onChanged;
   const PasswordOptions({
     super.key,
-    required this.has,
+     this.has,
     required this.onChanged,
     required this.leading,
     required this.trailing,
@@ -33,7 +33,7 @@ class PasswordOptions extends StatelessWidget {
               ),
               SizedBox(
                 child: Switch.adaptive(
-                  value: has,
+                  value: has!,
                   onChanged: onChanged,
                 ),
               ),
